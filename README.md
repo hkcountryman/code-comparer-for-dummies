@@ -1,4 +1,4 @@
-# io-comparer-for-dummies
+# clipcomp
 
 It's me, I'm the dummy.
 
