@@ -1,5 +1,7 @@
 # io-comparer-for-dummies
 
+It's me, I'm the dummy.
+
 I wrote this program because I like to follow tutorials without copying and pasting. I think typing everything helps me remember what I learn. However, I frequently make transcription errors, realize that copying the tutorial code fixes my problem, and then stare at my code for a really long time trying to figure out where I mistyped. I thought I'd write a program to make it explicitly clear to me exactly where my file deviates from the contents of my clipboard because it might save me some time. Then I thought I'd write it in Java because I hate myself.
 
 All you need to download is Comparer.java. From the directory it's located in, it like so:
