@@ -2,20 +2,87 @@ import java.lang.*;
 import java.util.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.Toolkit;
 
 public class Comparer {
 
+    // Array to store args[1] and [2], if they exist
+    private static int[] lineNums = new int[2];
+
+    /**
+     * Getter method for lineNums, so we may use args[1] and [2] in methods besides main.
+     */
+    public static int[] getLines() {
+        return lineNums;
+    }
+
+    // Boolean to indicate existence of args[1] and [2]
+    private static boolean moreArgs = false;
+
+    /**
+     * Getter method for moreArgs, so we may use it in methods besides main.
+     */
+    public static boolean getMoreArgs() {
+        return moreArgs;
+    }
+
+    /**
+     * Entry point.
+     * 
+     * @param args array of arguments: must include one file, plus two optional ints
+     * @throws FileNotFoundException if first argument is not a valid filename
+     */
     public static void main(String[] args) throws IOException, Exception {
         // Right number of arguments?
-        if(args.length != 1) {
-            System.out.println("You must supply one argument in the form of a file to read.");
-            System.exit(128);
-        // If so, create file object from argument
-        } else {
+        if(args.length <= 3) {
+            // Mandatory first argument is file to read
             File file = new File(args[0]);
+            if(! file.exists() || file.isDirectory()) {
+                System.err.println(args[0] + " is not a valid filename.");
+                System.exit(128);
+            }
+            // Check for 2 extra arguments
+            if(args.length == 3) {
+                // Confirm both are integers
+                try {
+                    lineNums[0] = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    System.err.println("Argument " + args[1] + " must be a positive integer.");
+                    System.exit(128);
+                }
+                try {
+                    lineNums[1] = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    System.err.println("Argument " + args[2] + " must be a positive integer.");
+                    System.exit(128);
+                }
+                // Confirm both are positive
+                if(lineNums[0] < 1) {
+                    System.err.println("Argument " + lineNums[0] + " must be a positive integer.");
+                    System.exit(128);
+                }
+                if(lineNums[1] < 1) {
+                    System.err.println("Argument " + lineNums[1] + " must be a positive integer.");
+                    System.exit(128);
+                }
+                // Confirm args[1] <= args[2]
+                if(lineNums[0] > lineNums[1]) {
+                    System.err.println("Argument " + lineNums[0] + " must not exceed argument " + lineNums[1] + ".");
+                    System.exit(128);
+                }
+                // If we get this far moreArgs must be true
+                moreArgs = true;
+            }
+            // NOW we're ready to execute program...
             new Comparer().run(file);
+        } else { // Wrong number of arguments!
+            System.out.print("You must supply one argument in the form of a file to read. ");
+            System.out.println("You may supply two more arguments specifying lines to read, e.g.:");
+            System.out.println("\tjava Comparer myFile.txt 12 14");
+            System.out.println("would read from lines 12-14.");
+            System.exit(128);
         }
     }
 
@@ -45,6 +112,15 @@ public class Comparer {
         while(fileScanner.hasNext()) {
             contents.add(fileScanner.nextLine());
         }
+
+        // If we used optional line number args...
+        int[] lines = getLines();
+        int begin = lines[0] - 1;
+        int end = lines[1];
+        if(getMoreArgs()) {
+            contents = new ArrayList<String>(contents.subList(begin, end));
+        }
+
         return contents;
     }
 
@@ -138,10 +214,10 @@ public class Comparer {
 
         // Check for extra lines
         if(i < file.size()) {
-            System.out.println("Input file has extra lines");
+            match = "Input file has extra lines";
         }
         if(i < clipboard.length) {
-            System.out.println("Clipboard contents has extra lines");
+            match = "Clipboard contents has extra lines";
         }
 
         System.out.println();
