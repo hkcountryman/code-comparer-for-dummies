@@ -27,41 +27,37 @@ public class Comparer {
      * @throws Exception if the user's clipboard contents are invalid
      */
     private void run(File file) throws IOException, Exception {
-        String stringDumb = readFile(file);
-        String stringIntended = readClipboard();
-        ArrayList<Character> problems = compare(stringDumb, stringIntended);
-        printProblems(stringDumb, stringIntended, problems);
+        ArrayList<String> stringDumb = readFile(file);
+        String[] stringIntended = readClipboard();
+        printProblems(stringDumb, stringIntended);
     }
 
     /**
-     * Reads the input file, creating one big string ending in a newline.
+     * Reads the input file.
      * 
      * @param file the input file to read
-     * @return the contents of the file as one string
+     * @return the contents of the file as an ArrayList of Strings
      * @throws IOException if the file is invalid
      */
-    private String readFile(File file) throws IOException {
+    private ArrayList<String> readFile(File file) throws IOException {
         Scanner fileScanner = new Scanner(file);
-        String contents = "";
+        ArrayList<String> contents = new ArrayList<String>();
         while(fileScanner.hasNext()) {
-            contents = contents + fileScanner.nextLine() + "\n";
+            contents.add(fileScanner.nextLine());
         }
         return contents;
     }
 
     /**
-     * Reads whatever was last copied to clipboard, ensuring it ends in a newline. Shamelessly stolen from
+     * Reads whatever was last copied to clipboard. Shamelessly stolen from
      * https://stackoverflow.com/questions/43550974/how-to-access-clipboard-data-using-java-in-windows/43550998
      * 
-     * @return the contents of the clipboard as one string
+     * @return the contents of the clipboard as an array of Strings
      * @throws Exception if the clipboard contents are invalid
      */
-    private String readClipboard() throws Exception {
-        String contents = (String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-        char lastChar = contents.charAt(contents.length()-1);
-        if(lastChar != '\n') {
-            contents = contents + "\n";
-        }
+    private String[] readClipboard() throws Exception {
+        String clipboard = (String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+        String[] contents = clipboard.split("\\r?\\n");
         return contents;
     }
 
@@ -74,7 +70,7 @@ public class Comparer {
      * @throws IOException if file isn't valid
      * @throws Exception if clipboard isn't valid
      */
-    private ArrayList<Character> compare(String file, String clipboard) throws IOException, Exception {
+    private ArrayList<Character> compareLine(String file, String clipboard) throws IOException, Exception {
         // ArrayList to hold any indices where the strings diverge
         ArrayList<Character> badIndices = new ArrayList<Character>();
 
@@ -88,27 +84,63 @@ public class Comparer {
             }
             i++;
         }
+        
+        // See if either string is longer
+        while(i < file.length()) {
+            badIndices.add('^');
+            i++;
+        }
+        while(i < clipboard.length()) {
+            badIndices.add('^');
+            i++;
+        }
+
         return badIndices;
     }
 
-    private void printProblems(String file, String clipboard, ArrayList<Character> indices) {
+    /**
+     * Prints whether the strings match.
+     * 
+     * @param file the ArrayList of Strings in the input file
+     * @param clipboard the array of Strings on the clipboard
+     * @throws IOException if the file is invalid
+     * @throws Exception if the clipboard contents is invalid
+     */
+    private void printProblems(ArrayList<String> file, String[] clipboard) throws IOException, Exception {
         System.out.println();
-
-        // Print file string and clipboard string on top of each other
-        System.out.print(file);
-        System.out.print(clipboard);
 
         // Whether strings match:
         String match = "It's a match!";
 
-        // Print where strings don't match
-        for(char index : indices) {
-            // Print until newline
-            
-            System.out.print(index);
-            if(index == '^') {
-                match = "\nSee errors indicated by ^";
+        // Print line by line
+        int i = 0;
+        while(i < file.size() && i < clipboard.length) {
+            // The lines to compare
+            String fileString = file.get(i);
+            String clipString = clipboard[i];
+            System.out.println(fileString);
+            System.out.println(clipString);
+
+            // Whether they're correct
+            ArrayList<Character> indices = new ArrayList<Character>();
+            indices = compareLine(fileString, clipString);
+            for(char index : indices) {
+                System.out.print(index);
+                if(index == '^') {
+                    match = "See errors indicated by ^";
+                }
             }
+            System.out.println("\n");
+
+            i++;
+        }
+
+        // Check for extra lines
+        if(i < file.size()) {
+            System.out.println("Input file has extra lines");
+        }
+        if(i < clipboard.length) {
+            System.out.println("Clipboard contents has extra lines");
         }
 
         System.out.println();
