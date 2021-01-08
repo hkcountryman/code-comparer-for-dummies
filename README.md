@@ -12,7 +12,7 @@ Then run it with the file you want to test as the argument, making sure you have
 ```
 $ java Comparer ~/Documents/test.txt
 ```
-Should also work on Windows (no promises):
+Should also work on Windows (no promises though; Windows is hard):
 ```
 $ java Comparer C:\Users\YourName\Documents\test.txt
 ```
