@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.lang.IndexOutOfBoundsException;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.Toolkit;
 
@@ -35,10 +36,17 @@ public class Comparer {
      * @throws FileNotFoundException if first argument is not a valid filename
      */
     public static void main(String[] args) throws IOException, Exception {
+        File file = new File("");
+        
         // Right number of arguments?
         if(args.length <= 3) {
             // Mandatory first argument is file to read
-            File file = new File(args[0]);
+            try {
+                file = new File(args[0]);
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println("File path is a mandatory first argument.");
+                System.exit(128);
+            }
             if(! file.exists() || file.isDirectory()) {
                 System.err.println(args[0] + " is not a valid filename.");
                 System.exit(128);
