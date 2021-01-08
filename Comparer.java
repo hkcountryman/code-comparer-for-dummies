@@ -118,12 +118,13 @@ public class Comparer {
             // The lines to compare
             String fileString = file.get(i);
             String clipString = clipboard[i];
-            System.out.println(fileString);
-            System.out.println(clipString);
+            System.out.println("File: " + fileString);
+            System.out.println("Clip: " + clipString);
 
             // Whether they're correct
             ArrayList<Character> indices = new ArrayList<Character>();
             indices = compareLine(fileString, clipString);
+            System.out.print("      ");
             for(char index : indices) {
                 System.out.print(index);
                 if(index == '^') {
