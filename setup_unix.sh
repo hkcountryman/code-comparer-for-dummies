@@ -1,5 +1,10 @@
 #!/bin/bash
 
-sudo cp -r clipcomp_unix /usr/local
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "Not running as root"
+    exit
+fi
+
+cp -r clipcomp_unix /usr/local
 cd /usr/local/bin
-ln - s ../clipcomp_unix/clipcomp.sh clipcomp
+ln -s ../clipcomp_unix/clipcomp.sh clipcomp
