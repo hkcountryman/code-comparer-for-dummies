@@ -1,4 +1,4 @@
-# clipcomp
+# clipcomp for Linux and Mac
 
 It's me, I'm the dummy.
 
@@ -6,20 +6,24 @@ I wrote this program because I like to follow tutorials without copying and past
 
 I thought I'd write a program to make it explicitly clear to myself exactly where my file deviates from the contents of my clipboard because it might save me some time. Then I thought I'd write it in Java because I hate myself.
 
+## Requirements
+Something to execute a Java archive with. I suggest [OpenJDK](https://openjdk.java.net/).
+
 ## Instructions
-This should work on any OS so long as you have a Java compiler. All you really need to do is download Comparer.java and compile it like so:
+Run the setup script:
 ```
-$ javac Comparer.java
+$ sudo ./setup_unix.sh
 ```
+It will put the clipcomp_unix directory into your /usr/local and then create a symbolic link so you can run the command ```clipcomp``` from anywhere in your file system.
 
 ## Use
-Run it with the file you want to test as the first argument, making sure you have the text to test the file against in your clipboard. Say you want to compare your clipboard contents to a file called test.txt in your Documents folder:
+Run ```clipcomp``` with the file you want to test as the first argument, making sure you have the text to test the file against in your clipboard. Say you want to compare your clipboard contents to a file called test.txt in your Documents folder:
 ```
-$ java Comparer ~/Documents/test.txt
+$ clipcomp ~/Documents/test.txt
 ```
 Optionally, you can specify start and end line numbers (inclusive) to only compare a section of your file. So, if you want to check lines 2-14:
 ```
-$ java Comparer ~/Documents/test.txt 2 14
+$ clipcomp ~/Documents/test.txt 2 14
 ```
 It will print out a line from your file, a corresponding line from your clipboard, and a line below both with ```^``` symbols to indicate which characters don't match.
 
