@@ -7,4 +7,4 @@ fi
 
 cp -r clipcomp_unix /usr/local
 cd /usr/local/bin
-ln -s ../clipcomp_unix/clipcomp.sh clipcomp
+ln -s /usr/local/clipcomp_unix/clipcomp.sh clipcomp
