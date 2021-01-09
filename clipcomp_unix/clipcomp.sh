@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -jar ./clipcomp.jar $*
+java -jar /usr/local/clipcomp_unix/clipcomp.jar $*
