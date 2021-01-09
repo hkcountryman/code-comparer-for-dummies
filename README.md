@@ -6,13 +6,23 @@ I wrote this program because I like to follow tutorials without copying and past
 
 I thought I'd write a program to make it explicitly clear to myself exactly where my file deviates from the contents of my clipboard because it might save me some time. Then I thought I'd write it in Java because I hate myself.
 
+## Requirements
+Something to execute a Java archive with. I suggest [OpenJDK](https://openjdk.java.net/).
+
 ## Instructions
-This should work on any OS so long as you have a Java compiler. All you really need to do is download Comparer.java and compile it like so:
+
+#### Easy method
+Download a release. Right now I have a release for Linux and Mac consisting of the for_unix branch (see further instructions there). Windows incoming.
+
+#### Annoying method
+This should work on any OS so long as you have a Java compiler. All you really need to do is download Comparer.java; the other files aren't necessary unless you want to look at them. Compile it like so:
 ```
 $ javac Comparer.java
 ```
 
 ## Use
+See the release instructions if you downloaded a release. If you compiled Comparer.java yourself, proceed:
+
 Run it with the file you want to test as the first argument, making sure you have the text to test the file against in your clipboard. Say you want to compare your clipboard contents to a file called test.txt in your Documents folder:
 ```
 $ java Comparer ~/Documents/test.txt
