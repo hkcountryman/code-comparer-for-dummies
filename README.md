@@ -7,7 +7,7 @@ I wrote this program because I like to follow tutorials without copying and past
 I thought I'd write a program to make it explicitly clear to myself exactly where my file deviates from the contents of my clipboard because it might save me some time. Then I thought I'd write it in Java because I hate myself.
 
 ## Requirements
-Something to execute a Java archive with. I suggest [OpenJDK](https://openjdk.java.net/).
+Something to execute a Java archive with. I suggest [OpenJDK](https://openjdk.java.net/). Use your package installer for Linux or follow [these](https://solarianprogrammer.com/2018/09/28/installing-openjdk-macos/) instructions for macOS.
 
 ## Instructions
 Run the setup script:
