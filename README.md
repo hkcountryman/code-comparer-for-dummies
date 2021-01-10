@@ -12,7 +12,7 @@ Something to execute a Java archive with. I suggest [OpenJDK](https://openjdk.ja
 ## Instructions
 
 #### Easy method
-Download a release.
+Download a release. There's one for Linux/macOS and one for Windows.
 
 #### Annoying method
 This should work on any OS so long as you have a Java compiler. All you really need to do is download Comparer.java; the other files aren't necessary unless you want to look at them. Compile it like so:
