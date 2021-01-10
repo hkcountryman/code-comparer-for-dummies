@@ -11,25 +11,16 @@ Something to execute a Java archive with. I suggest [OpenJDK](https://openjdk.ja
 
 ## Instructions
 
-#### Easy method
-Download a release. Right now I have a release for Linux and Mac consisting of the for_unix branch (see further instructions there). Windows incoming.
-
-#### Annoying method
-This should work on any OS so long as you have a Java compiler. All you really need to do is download Comparer.java; the other files aren't necessary unless you want to look at them. Compile it like so:
-```
-$ javac Comparer.java
-```
+The Windows release contains a .jar file and a batch script you can call to execute it. To be able to call the batch script from anywhere, you need to add the path to the clipcomp_win directory (wherever you put it) to your PATH environment variable. Search the Start menu for "edit system environment variables" and hit enter. A window will pop up. Hit the button on the bottom that says "Environment Variables" and double click your PATH variable under System variables. Add a new one and paste the path to clipcomp_win into the text field that appears. Now you should be able to call it from the command line.
 
 ## Use
-See the release instructions if you downloaded a release. If you compiled Comparer.java yourself, proceed:
-
 Run it with the file you want to test as the first argument, making sure you have the text to test the file against in your clipboard. Say you want to compare your clipboard contents to a file called test.txt in your Documents folder:
 ```
-$ java Comparer ~/Documents/test.txt
+$ clipcomp.cmd C:\User\username\Documents\test.txt
 ```
 Optionally, you can specify start and end line numbers (inclusive) to only compare a section of your file. So, if you want to check lines 2-14:
 ```
-$ java Comparer ~/Documents/test.txt 2 14
+$ clipcomp.cmd C:\User\username\Documents\test.txt 2 14
 ```
 It will print out a line from your file, a corresponding line from your clipboard, and a line below both with ```^``` symbols to indicate which characters don't match.
 
